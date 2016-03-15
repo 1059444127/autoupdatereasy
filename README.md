@@ -71,6 +71,7 @@ Error                                  | It is triggered when an error occurs.
 #### Copy always
 `
 When you install the AutoUpaderEasy nuget repository, the package creates into the your project folder an executable file named "AutoUpdateView.exe". This file will run out of your application to kill him and extract the update package files thus replacing the old files.
+You need to ensure that the executable will be copied to the bin folder of your project.
 `
 
 ![alt tag](https://raw.githubusercontent.com/cecon/autoupdatereasy/master/AutoUpdaterEasy/Resources/Manual.png)
