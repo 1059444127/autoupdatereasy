@@ -7,11 +7,21 @@ using AutoUpdaterEasy.Exceptions;
 namespace AutoUpdaterEasy
 {
     public class AutoUpdater
-    {        
+    {
+        public static void Initialize(string url, string currentVersion)
+        {
+            Instance = new AutoUpdater(url, currentVersion);
+            Instance.Start();
+        }
+        public static AutoUpdater Instance { get; private set; }
+
+
         private Thread _thread;
         private int _progress;
         private bool _isRunning;
         private bool _isCancel;
+        private bool _isAccepted;
+        public event EventHandler NewUpdate;
         public event EventHandler<DownloadProgressChangedEventArgs> DownloadProgressChanged;
         public event EventHandler DownloadCompleted;
         public event EventHandler<MessageArgs> Error;
@@ -19,13 +29,15 @@ namespace AutoUpdaterEasy
         private readonly string _currentVersion;
         private bool _await;
         private JsonConfig _jsonConfig;
-        public AutoUpdater(string url, string currentVersion)
+
+        private AutoUpdater(string url, string currentVersion)
         {
             _url = url;
             _currentVersion = currentVersion;
             _jsonConfig = JsonConfig.Factory();
         }
-        public void Start()
+
+        private void Start()
         {
             if (_isRunning) return;
             _isCancel = false;
@@ -65,6 +77,18 @@ namespace AutoUpdaterEasy
             }
         }
 
+        public void Accept()
+        {
+            _await = false;
+            _isAccepted = true;
+        }
+
+        public void Reject()
+        {
+            _isAccepted = false;
+            _await = false;            
+        }
+
         private void Run()
         {            
             try
@@ -81,6 +105,19 @@ namespace AutoUpdaterEasy
                             Sleep(_jsonConfig.GetMilliseconds()/1000);
                             continue;
                         }
+
+                        if (!_jsonConfig.ForceUpdate)
+                        {
+                            _await = true;
+                            OnNewUpdate();
+                            Waiting();
+                            if (!_isAccepted)
+                            {
+                                Sleep(_jsonConfig.GetMilliseconds() / 1000);
+                                continue;
+                            }
+                        }
+
                         _progress = 0;
                         _jsonConfig.ProgressChanged += (e, a) => OnDownloadProgressChanged(a);
                         _jsonConfig.DownloadCompleted += (e, a) => OnDownloadCompleted();
@@ -143,6 +180,11 @@ namespace AutoUpdaterEasy
         protected virtual void OnError(string e)
         {
             Error?.Invoke(this, new MessageArgs(e));
+        }
+
+        protected virtual void OnNewUpdate()
+        {
+            NewUpdate?.Invoke(this, EventArgs.Empty);
         }
     }
 }

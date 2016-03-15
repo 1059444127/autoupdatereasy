@@ -17,13 +17,12 @@ namespace AutoUpdaterEasyTest
         [TestMethod]
         public void ShouldDownloadFile()
         {
-            var auto = new AutoUpdater("http://update.arcnet.com.br/autoupdatereasytest/myjsonupdater.json", "1.0.0.0");
-            auto.Start();
+            AutoUpdater.Initialize("http://update.arcnet.com.br/autoupdatereasytest/myjsonupdater.json", "1.0.0.0");            
             _percent = 0;
-            auto.DownloadProgressChanged += (e, a) => { Percent(a.ProgressPercentage); };
-            auto.DownloadCompleted += (e, a) => { Debug.WriteLine("FIM DO DOWNLOAD"); };
-            auto.Error += (e, a) => { Debug.WriteLine(a.Message); };
-            auto.Join();
+            AutoUpdater.Instance.DownloadProgressChanged += (e, a) => { Percent(a.ProgressPercentage); };
+            AutoUpdater.Instance.DownloadCompleted += (e, a) => { Debug.WriteLine("FIM DO DOWNLOAD"); };
+            AutoUpdater.Instance.Error += (e, a) => { Debug.WriteLine(a.Message); };
+            AutoUpdater.Instance.Join();
             Assert.IsTrue(File.Exists(JsonConfig.PackagePath));
         }
 
@@ -31,13 +30,12 @@ namespace AutoUpdaterEasyTest
         [ExpectedException(typeof(Win32Exception))]
         public void ShouldUnzipDownloadedFile()
         {
-            var auto = new AutoUpdater("http://update.arcnet.com.br/autoupdatereasytest/myjsonupdater.json", "1.0.0.0");
-            auto.Start();
+            AutoUpdater.Initialize("http://update.arcnet.com.br/autoupdatereasytest/myjsonupdater.json", "1.0.0.0");
             _percent = 0;
-            auto.DownloadProgressChanged += (e, a) => { Percent(a.ProgressPercentage); };
-            auto.DownloadCompleted += (e, a) => { Debug.WriteLine("FIM DO DOWNLOAD"); };
-            auto.Error += (e, a) => { Debug.WriteLine(a.Message); };
-            auto.Join();
+            AutoUpdater.Instance.DownloadProgressChanged += (e, a) => { Percent(a.ProgressPercentage); };
+            AutoUpdater.Instance.DownloadCompleted += (e, a) => { Debug.WriteLine("FIM DO DOWNLOAD"); };
+            AutoUpdater.Instance.Error += (e, a) => { Debug.WriteLine(a.Message); };
+            AutoUpdater.Instance.Join();
             Assert.IsTrue(File.Exists(JsonConfig.PackagePath));
             
             var form = new UiMain();

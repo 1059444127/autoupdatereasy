@@ -18,11 +18,11 @@ namespace AutoUpdaterEasy.Entities
             try
             {
                 var file = JsonConvert.DeserializeObject<JsonConfig>(ReadUrl(jsonUrl));
-                if (string.IsNullOrWhiteSpace(file.CheckEveryType)) throw new JsonConfigException();
+                if (string.IsNullOrWhiteSpace(file.IntervalType)) throw new JsonConfigException();
                 if (string.IsNullOrWhiteSpace(file.PackageUrl)) throw new JsonConfigException();
                 if (string.IsNullOrWhiteSpace(file.Version)) throw new JsonConfigException();
                 if (string.IsNullOrWhiteSpace(file.ProcessKill)) throw new JsonConfigException();
-                if ("minute,second,hour,day".IndexOf(file.CheckEveryType, StringComparison.Ordinal) == -1) throw new JsonConfigException();
+                if ("minute,second,hour,day".IndexOf(file.IntervalType, StringComparison.Ordinal) == -1) throw new JsonConfigException();
                 return file;
             }
             catch (Exception)
@@ -43,8 +43,8 @@ namespace AutoUpdaterEasy.Entities
                         file = JsonConvert.DeserializeObject<JsonConfig>(sr.ReadToEnd());
                     }
                 }
-                if (string.IsNullOrWhiteSpace(file.CheckEveryType)) throw new JsonConfigException();
-                if ("minute,second,day".IndexOf(file.CheckEveryType, StringComparison.Ordinal) == -1) throw new JsonConfigException();
+                if (string.IsNullOrWhiteSpace(file.IntervalType)) throw new JsonConfigException();
+                if ("minute,second,day".IndexOf(file.IntervalType, StringComparison.Ordinal) == -1) throw new JsonConfigException();
                 return file;
             }
             catch (Exception)
@@ -55,19 +55,19 @@ namespace AutoUpdaterEasy.Entities
 
         public JsonConfig()
         {
-            CheckEveryType = "minute";
+            IntervalType = "minute";
             CheckEvery = 30;
         }
         public string PackageUrl { get; set; }
         public bool ForceUpdate { get; set; }
         public string ProcessKill { get; set; }
         public int CheckEvery { get; set; }
-        public string CheckEveryType { get; set; }
+        public string IntervalType { get; set; }
         public string Version { get; set; }
 
         public int GetMilliseconds()
         {
-            switch (CheckEveryType)
+            switch (IntervalType)
             {
                 case "second":
                     return CheckEvery*1000;
