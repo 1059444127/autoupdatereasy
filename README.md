@@ -48,6 +48,8 @@ Usage
  Key                                   | Description
 ---------------------------------------|-------------------------------------
 packageUrl                             | URL of the package containing the updated application. `[required]` 
+packageFileName                        | Name of the download file. `[optional] [default 'update.zip']`
+packageConfigName                      | Name of the json config file. `[optional] [default 'config.json']`
 forceUpdate                            | Indicator to force the update without the user's iteration. `[optional] [default 'False']`
 checkEvery                             | It indicates the library to check for updates every X range. `[optional] [default '30']`
 intervalType                           | defines the type of range: `second, minute, hour or day`. `[optional] [default 'minute']`
