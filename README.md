@@ -1,5 +1,4 @@
-# Auto Updater Easy™
-=====
+# Auto Updater Easyâ„¢
 
 * https://www.nuget.org/packages/AutoUpdaterEasy/p
 * https://github.com/cecon/autoupdatereasy
@@ -82,8 +81,8 @@ Error                                  | It is triggered when an error occurs.
     </system.webServer>
 </configuration>
 ```
-`This is necessary to show static json file`
 ---
+`This is necessary to show static json file`
 
 By
 ------
