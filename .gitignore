@@ -20,7 +20,10 @@ x86/
 bld/
 [Bb]in/
 [Oo]bj/
+<<<<<<< HEAD
 [Ll]og/
+=======
+>>>>>>> ab16f66f3f108bb76557d2c0faac9a8c0f0ea23f
 
 # Visual Studio 2015 cache/options directory
 .vs/
