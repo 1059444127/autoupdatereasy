@@ -17,7 +17,7 @@ Usage
 ##### Startup Sample
 
 ```C#
-	/// <summary>
+		/// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
@@ -32,7 +32,7 @@ Usage
 ```
 ##### Event Sample
 ```C#
-	private void Instance_DownloadCompleted(object sender, EventArgs e)
+		private void Instance_DownloadCompleted(object sender, EventArgs e)
         {
             if (Progress != 100) return;
             if (InvokeRequired)
