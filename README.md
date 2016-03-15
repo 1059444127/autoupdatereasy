@@ -14,8 +14,10 @@ This is a very easy auto update for any .Net applications. To use simply install
 Usage
 -----
 
+##### Startup Sample
+
 ```C#
-		/// <summary>
+	/// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
@@ -26,6 +28,34 @@ Usage
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new UiMain());
             AutoUpdater.Instance.Stop();
+        }
+```
+##### Event Sample
+```C#
+	private void Instance_DownloadCompleted(object sender, EventArgs e)
+        {
+            if (Progress != 100) return;
+            if (InvokeRequired)
+            {
+                Invoke(new EventHandler(Instance_DownloadCompleted), sender, e);
+                return;
+            }
+            UiUpdaterProgress.Instance.Hide();
+            AutoUpdater.Instance.UpdateView();
+            Environment.Exit(Environment.ExitCode);
+        }
+
+        private void Instance_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new EventHandler<DownloadProgressChangedEventArgs>(Instance_DownloadProgressChanged), sender, e);
+                return;
+            }
+            Progress = e.ProgressPercentage;
+
+            UiUpdaterProgress.Instance.Show();
+            UiUpdaterProgress.Instance.SetStep(e);
         }
 ```
 
@@ -49,13 +79,12 @@ Usage
 ---------------------------------------|-------------------------------------
 packageUrl                             | URL of the package containing the updated application. `[required]` 
 packageFileName                        | Name of the download file. `[optional] [default 'update.zip']`
-packageConfigName                      | Name of the json config file. `[optional] [default 'config.json']`
 forceUpdate                            | Indicator to force the update without the user's iteration. `[optional] [default 'False']`
 checkEvery                             | It indicates the library to check for updates every X range. `[optional] [default '30']`
 intervalType                           | defines the type of range: `second, minute, hour or day`. `[optional] [default 'minute']`
 output                                 | Determines the extraction directory of package files. `[optional] [default '.\']`
 version                                | Current version of the upgrade package. `[required]`
-processKill                            | Name of the process to be closed before extracting the update files.
+processStart                           | Name of the process to be started before extracting the update files.
 ---
 
 `the key "output" can be overridden by setting "OutputPath" directly into your app.config`
