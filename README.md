@@ -68,8 +68,14 @@ DownloadCompleted                      | It is triggered when a download is comp
 Error                                  | It is triggered when an error occurs.
 ---
 
+#### Copy always
+`
+When you install the AutoUpaderEasy nuget repository, the package creates into the your project folder an executable file named "AutoUpdateView.exe". This file will run out of your application to kill him and extract the update package files thus replacing the old files.
+`
 
-### IIS Web.config
+![alt tag](https://raw.githubusercontent.com/cecon/autoupdatereasy/master/AutoUpdaterEasy/Resources/Manual.png)
+
+#### IIS Web.config
 ```
 <?xml version="1.0"?>
  
