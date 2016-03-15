@@ -1,5 +1,5 @@
 # Auto Updater Easy™
-====================
+=====
 
 * https://www.nuget.org/packages/AutoUpdaterEasy/p
 * https://github.com/cecon/autoupdatereasy
@@ -30,8 +30,8 @@ Usage
         }
 ```
 
-*Json file model [config.json]:
-***The package name always be 'update.zip'
+####Json file model [config.json]:
+`The package always named 'update.zip'`
 
 ```
 {
@@ -44,7 +44,7 @@ Usage
 	"checkEveryType":"second"
 }
 ```
-### Summary of config json
+#### Summary of config json
 
  Key                                   | Description
 ---------------------------------------|-------------------------------------
@@ -57,9 +57,9 @@ version                                | Current version of the upgrade package.
 processKill                            | Name of the process to be closed before extracting the update files.
 ---
 
-**the key "output" can be overridden by setting "OutputPath" directly into your app.config
+`the key "output" can be overridden by setting "OutputPath" directly into your app.config`
 
-### Summary of Events
+#### Summary of Events
 
  Event                                 | Description
 ---------------------------------------|-------------------------------------
@@ -82,6 +82,9 @@ Error                                  | It is triggered when an error occurs.
     </system.webServer>
 </configuration>
 ```
+`This is necessary to show static json file`
+---
+
 By
 ------
 

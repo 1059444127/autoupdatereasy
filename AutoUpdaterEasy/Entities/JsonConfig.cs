@@ -18,10 +18,16 @@ namespace AutoUpdaterEasy.Entities
             try
             {
                 var file = JsonConvert.DeserializeObject<JsonConfig>(ReadUrl(jsonUrl));
-                if (string.IsNullOrWhiteSpace(file.IntervalType)) throw new JsonConfigException();
+                if (string.IsNullOrWhiteSpace(file.IntervalType))
+                {
+                    file.IntervalType = "minute";
+                }
                 if (string.IsNullOrWhiteSpace(file.PackageUrl)) throw new JsonConfigException();
                 if (string.IsNullOrWhiteSpace(file.Version)) throw new JsonConfigException();
-                if (string.IsNullOrWhiteSpace(file.ProcessKill)) throw new JsonConfigException();
+                if (string.IsNullOrWhiteSpace(file.ProcessKill))
+                {
+                    file.ProcessKill = "";
+                }
                 if ("minute,second,hour,day".IndexOf(file.IntervalType, StringComparison.Ordinal) == -1) throw new JsonConfigException();
                 return file;
             }
@@ -43,8 +49,11 @@ namespace AutoUpdaterEasy.Entities
                         file = JsonConvert.DeserializeObject<JsonConfig>(sr.ReadToEnd());
                     }
                 }
-                if (string.IsNullOrWhiteSpace(file.IntervalType)) throw new JsonConfigException();
-                if ("minute,second,day".IndexOf(file.IntervalType, StringComparison.Ordinal) == -1) throw new JsonConfigException();
+                if (string.IsNullOrWhiteSpace(file.IntervalType))
+                {
+                    file.IntervalType = "minute";
+                }
+                if ("second,minute,hour,day".IndexOf(file.IntervalType, StringComparison.Ordinal) == -1) throw new JsonConfigException();
                 return file;
             }
             catch (Exception)
