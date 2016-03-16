@@ -12,7 +12,7 @@ namespace AutoUpdaterEasy.Entities
         public event EventHandler DownloadCompleted;
         public event EventHandler<DownloadProgressChangedEventArgs> ProgressChanged;
         private const string FilePath = @".\UpdaterConfig.json";
-        public const string PackagePath = @".\Update.zip";
+        
         public static JsonConfig Factory(string jsonUrl)
         {
             try
@@ -24,17 +24,26 @@ namespace AutoUpdaterEasy.Entities
                 }
                 if (string.IsNullOrWhiteSpace(file.PackageUrl)) throw new JsonConfigException();
                 if (string.IsNullOrWhiteSpace(file.Version)) throw new JsonConfigException();
-                if (string.IsNullOrWhiteSpace(file.ProcessKill))
+                if (string.IsNullOrWhiteSpace(file.ProcessStart))
                 {
-                    file.ProcessKill = "";
+                    file.ProcessStart = "";
                 }
                 if ("minute,second,hour,day".IndexOf(file.IntervalType, StringComparison.Ordinal) == -1) throw new JsonConfigException();
                 return file;
             }
-            catch (Exception)
+            catch (WebException ex)
             {
+                switch (ex.Status)
+                {
+                    case WebExceptionStatus.ProtocolError:
+                        throw new ProtocolErrorException();
+                    case WebExceptionStatus.NameResolutionFailure:
+                        throw new DnsNotResolveException();
+                    case WebExceptionStatus.ConnectFailure:
+                        throw new ConnectionFailureException();
+                }
                 throw new JsonConfigException();
-            }            
+            }
         }
 
         public static JsonConfig Factory()
@@ -56,8 +65,17 @@ namespace AutoUpdaterEasy.Entities
                 if ("second,minute,hour,day".IndexOf(file.IntervalType, StringComparison.Ordinal) == -1) throw new JsonConfigException();
                 return file;
             }
-            catch (Exception)
+            catch (WebException ex)
             {
+                switch (ex.Status)
+                {
+                    case WebExceptionStatus.ProtocolError:
+                        throw new ProtocolErrorException();
+                    case WebExceptionStatus.NameResolutionFailure:
+                        throw new DnsNotResolveException();
+                    case WebExceptionStatus.ConnectFailure:
+                        throw new ConnectionFailureException();
+                }
                 throw new JsonConfigException();
             }
         }
@@ -65,11 +83,15 @@ namespace AutoUpdaterEasy.Entities
         public JsonConfig()
         {
             IntervalType = "minute";
+            Output = @".\";
+            PackageFileName = "update.zip";
             CheckEvery = 30;
         }
         public string PackageUrl { get; set; }
         public bool ForceUpdate { get; set; }
-        public string ProcessKill { get; set; }
+        public string PackageFileName { get; set; }
+        public string Output { get; set; }
+        public string ProcessStart { get; set; }
         public int CheckEvery { get; set; }
         public string IntervalType { get; set; }
         public string Version { get; set; }
@@ -114,10 +136,10 @@ namespace AutoUpdaterEasy.Entities
                 using (var client = new WebClient())
                 {
                     client.DownloadProgressChanged += (sender, args) => OnProgressChanged(args);
-                    if (File.Exists(PackagePath)) File.Delete(PackagePath);
+                    if (File.Exists($@".\{PackageFileName}")) File.Delete($@".\{PackageFileName}");
                     client.DownloadProgressChanged += (e, arg) => OnProgressChanged(arg);
                     client.DownloadFileCompleted += (e, a) => OnDownloadCompleted();
-                    client.DownloadFileAsync(new Uri(PackageUrl), PackagePath);
+                    client.DownloadFileAsync(new Uri(PackageUrl), $@".\{PackageFileName}");
                 }
             }
             catch (WebException ex)

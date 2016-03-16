@@ -29,19 +29,24 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.label1 = new System.Windows.Forms.Label();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UiMain));
+            this.LblMessage = new System.Windows.Forms.Label();
             this.TmrMain = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
-            // label1
+            // LblMessage
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(20, 109);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(227, 37);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Atualizando...";
+            this.LblMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.LblMessage.BackColor = System.Drawing.Color.Transparent;
+            this.LblMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblMessage.Location = new System.Drawing.Point(12, 9);
+            this.LblMessage.Name = "LblMessage";
+            this.LblMessage.Size = new System.Drawing.Size(235, 238);
+            this.LblMessage.TabIndex = 0;
+            this.LblMessage.Text = "Atualizando...";
+            this.LblMessage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // TmrMain
             // 
@@ -54,20 +59,21 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::AutoUpdaterView.Properties.Resources.Update;
             this.ClientSize = new System.Drawing.Size(259, 256);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.LblMessage);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "UiMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
+            this.Text = "Atualizando";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.UiMain_Load);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label LblMessage;
         private System.Windows.Forms.Timer TmrMain;
     }
 }

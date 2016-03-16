@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.IO;
 using System.Net;
 using System.Threading;
 using AutoUpdaterEasy.Entities;
@@ -14,7 +16,6 @@ namespace AutoUpdaterEasy
             Instance.Start();
         }
         public static AutoUpdater Instance { get; private set; }
-
 
         private Thread _thread;
         private int _progress;
@@ -51,6 +52,7 @@ namespace AutoUpdaterEasy
             if (!_isRunning) return;
             _thread.Join();
         }
+
         public void Stop()
         {
             if (!_isRunning) return;            
@@ -59,6 +61,7 @@ namespace AutoUpdaterEasy
             _thread = null;
             GC.Collect();
         }
+
         private void Sleep(int sec)
         {
             for (var i = 1; i <= sec; i++)
@@ -160,9 +163,11 @@ namespace AutoUpdaterEasy
             _isRunning = false;
         }
 
-        public void Unzip()
+        public void UpdateView()
         {
-            
+            if (!File.Exists(@".\AutoUpdaterView.exe")) return;
+
+            Process.Start(@".\AutoUpdaterView.exe", Process.GetCurrentProcess().ProcessName);
         }
 
         protected virtual void OnDownloadProgressChanged(DownloadProgressChangedEventArgs e)

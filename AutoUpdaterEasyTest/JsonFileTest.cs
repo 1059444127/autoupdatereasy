@@ -1,5 +1,4 @@
-﻿using System;
-using AutoUpdaterEasy.Entities;
+﻿using AutoUpdaterEasy.Entities;
 using AutoUpdaterEasy.Exceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -11,7 +10,7 @@ namespace AutoUpdaterEasyTest
         [TestMethod]
         public void ShouldFactoryAClass()
         {
-            var file = JsonConfig.Factory("http://update.arcnet.com.br/autoupdatereasytest/myjsonupdater.json");
+            var file = JsonConfig.Factory("http://update.arcnet.com.br/autoupdatereasytest/config.json");
             Assert.IsNotNull(file);
         }
 
@@ -19,7 +18,7 @@ namespace AutoUpdaterEasyTest
         [ExpectedException(typeof(ProtocolErrorException))]
         public void JsonNotFound()
         {
-            JsonConfig.Factory("http://update.arcnet.com.br/autoupdatereasytest/myjsonupdater1.json");            
+            JsonConfig.Factory("http://update.arcnet.com.br/autoupdatereasytest/config1.json");            
         }
 
         [TestMethod]
