@@ -1,6 +1,6 @@
 # Auto Updater Easy™
 
-* https://www.nuget.org/packages/AutoUpdaterEasy/p
+* https://www.nuget.org/packages/AutoUpdaterEasy
 * https://github.com/cecon/autoupdatereasy
 
 Description
@@ -9,7 +9,7 @@ Description
 This is a very easy auto update for any .Net applications. To use simply install Unzip package from Nuget:
 
 
-* [Install-Package AutoUpdaterEasy]https://www.nuget.org/packages/AutoUpdaterEasy
+* [Install-Package AutoUpdaterEasy](https://www.nuget.org/packages/AutoUpdaterEasy/)
 
 Usage
 -----
