@@ -64,13 +64,15 @@ Usage
 
 ```
 {
-	"packageUrl":"http://yourdomain/yourapp/update.zip",
-	"forceUpdate":"true",
-	"checkEvery":"10",
-	"processKill":"myapp",
-	"output":".\",
-	"version" : "1.0.0.1",
-	"checkEveryType":"second"
+	"packageUrl": "http://yourdomain/yourapp/update.zip",
+	"packageFileName": "update.zip",
+	"packageConfigName": "config.json",
+	"forceUpdate": "true",
+	"checkEvery": "1",
+	"intervalType": "second",
+	"output": ".\\",
+	"processStart": "yourapp.exe",
+	"version": "1.0.0.1"
 }
 ```
 #### Summary of config json
