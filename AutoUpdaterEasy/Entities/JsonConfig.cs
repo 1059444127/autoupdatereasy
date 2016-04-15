@@ -28,7 +28,7 @@ namespace AutoUpdaterEasy.Entities
                 {
                     file.ProcessStart = "";
                 }
-                if ("minute,second,hour,day".IndexOf(file.IntervalType, StringComparison.Ordinal) == -1) throw new JsonConfigException();
+                if ("minutes,seconds,hours,days".IndexOf(file.IntervalType, StringComparison.Ordinal) == -1) throw new JsonConfigException();
                 return file;
             }
             catch (WebException ex)
