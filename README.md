@@ -1,6 +1,6 @@
 # Auto Updater Easy™
 
-* https://www.nuget.org/packages/AutoUpdaterEasy/p
+* https://www.nuget.org/packages/AutoUpdaterEasy
 * https://github.com/cecon/autoupdatereasy
 
 Description
@@ -42,7 +42,6 @@ Usage
             }
             UiUpdaterProgress.Instance.Hide();
             AutoUpdater.Instance.UpdateView();
-            Environment.Exit(Environment.ExitCode);
         }
 
         private void Instance_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
@@ -64,13 +63,15 @@ Usage
 
 ```
 {
-	"packageUrl":"http://yourdomain/yourapp/update.zip",
-	"forceUpdate":"true",
-	"checkEvery":"10",
-	"processKill":"myapp",
-	"output":".\",
-	"version" : "1.0.0.1",
-	"checkEveryType":"second"
+	"packageUrl": "http://yourdomain/yourapp/update.zip",
+	"packageFileName": "update.zip",
+	"packageConfigName": "config.json",
+	"forceUpdate": "true",
+	"checkEvery": "1",
+	"intervalType": "second",
+	"output": ".\\",
+	"processStart": "yourapp.exe",
+	"version": "1.0.0.1"
 }
 ```
 #### Summary of config json
@@ -79,6 +80,7 @@ Usage
 ---------------------------------------|-------------------------------------
 packageUrl                             | URL of the package containing the updated application. `[required]` 
 packageFileName                        | Name of the download file. `[optional] [default 'update.zip']`
+packageConfigName                      | Name of the config json file. `[optional] [default 'config.json']`
 forceUpdate                            | Indicator to force the update without the user's iteration. `[optional] [default 'False']`
 checkEvery                             | It indicates the library to check for updates every X range. `[optional] [default '30']`
 intervalType                           | defines the type of range: `second, minute, hour or day`. `[optional] [default 'minute']`
