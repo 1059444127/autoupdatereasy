@@ -62,7 +62,7 @@ namespace AutoUpdaterEasy.Entities
                 {
                     file.IntervalType = "minute";
                 }
-                if ("second,minute,hour,day".IndexOf(file.IntervalType, StringComparison.Ordinal) == -1) throw new JsonConfigException();
+                if ("seconds,minutes,hours,days".IndexOf(file.IntervalType, StringComparison.Ordinal) == -1) throw new JsonConfigException();
                 return file;
             }
             catch (WebException ex)
@@ -101,12 +101,16 @@ namespace AutoUpdaterEasy.Entities
             switch (IntervalType)
             {
                 case "second":
+                case "seconds":
                     return CheckEvery*1000;
                 case "minute":
+                case "minutes":
                     return CheckEvery * 60 * 1000;
                 case "hour":
+                case "hours":
                     return CheckEvery * 60 * 60 * 1000;
                 case "day":
+                case "days":
                     return CheckEvery * 24 * 60 * 60 * 1000;
             }
             return 30*60*1000;
